@@ -1,52 +1,61 @@
 from __future__ import annotations
-
-from dataclasses import dataclass
+import os
+from dataclasses import dataclass, field
 from pathlib import Path
+from dotenv import load_dotenv
+from model_provider import ProviderConfig, normalize_provider
 
-from model_provider import ProviderConfig
+ROOT = Path(__file__).resolve().parent.parent
 
 
 @dataclass
 class LabConfig:
-    """Student TODO: define the shared configuration for the lab.
+    base_dir: Path = ROOT
+    data_dir: Path = ROOT / "data"
+    state_dir: Path = ROOT / "state"
+    compact_threshold_tokens: int = 1200
+    compact_keep_messages: int = 4
+    model: ProviderConfig = field(default_factory=lambda: ProviderConfig("openai", "stub"))
+    judge_model: ProviderConfig = field(default_factory=lambda: ProviderConfig("openai", "stub"))
+    memory_min_confidence: float = 0.85
+    summary_budget_tokens: int = 300
+    memory_half_life_turns: int = 0
+    memory_min_weight: float = 0.125
 
-    Hints:
-    - Keep paths for the repo root, dataset directory, and state directory.
-    - Add compact-memory settings such as threshold and number of messages to keep.
-    - Add provider settings for `openai`, `custom`, `gemini`, `anthropic`, `ollama`, and `openrouter`.
-    """
+    def __post_init__(self):
+        if self.compact_threshold_tokens < 1 or self.compact_keep_messages < 1:
+            raise ValueError("Compact threshold and keep_messages must be positive")
+        if not 0 <= self.memory_min_confidence <= 1 or self.summary_budget_tokens < 1:
+            raise ValueError("Invalid memory confidence or summary budget")
+        if self.memory_half_life_turns < 0 or not 0 < self.memory_min_weight <= 1:
+            raise ValueError("Invalid memory decay configuration")
 
-    base_dir: Path
-    data_dir: Path
-    state_dir: Path
-    compact_threshold_tokens: int
-    compact_keep_messages: int
-    model: ProviderConfig
-    judge_model: ProviderConfig
+
+def _provider_config(prefix: str, fallback: ProviderConfig | None = None) -> ProviderConfig:
+    provider = normalize_provider(os.getenv(f"{prefix}_PROVIDER", fallback.provider if fallback else "openai"))
+    key_prefix = provider.upper()
+    return ProviderConfig(
+        provider=provider,
+        model_name=os.getenv(f"{prefix}_MODEL", fallback.model_name if fallback and fallback.provider == provider else "stub"),
+        temperature=float(os.getenv(f"{prefix}_TEMPERATURE", "0")),
+        api_key=(os.getenv(f"{prefix}_API_KEY") or os.getenv(f"{key_prefix}_API_KEY")
+                 or (fallback.api_key if fallback and fallback.provider == provider else None)),
+        base_url=(os.getenv(f"{prefix}_BASE_URL") or os.getenv(f"{key_prefix}_BASE_URL")
+                  or (fallback.base_url if fallback and fallback.provider == provider else None)),
+    )
 
 
 def load_config(base_dir: Path | None = None) -> LabConfig:
-    """Student TODO: load environment variables and return a LabConfig.
-
-    Pseudocode:
-    1. Resolve the repo root or default to the current file parent.
-    2. Optionally load values from `.env`.
-    3. Create `state/` if it does not exist.
-    4. Return a populated LabConfig instance.
-    """
-
-    root = (base_dir or Path(__file__).resolve().parent.parent).resolve()
-
-    # TODO: read env vars for one of the supported providers.
-    # Example knobs:
-    # - LLM_PROVIDER / LLM_MODEL
-    # - OPENAI_API_KEY
-    # - GEMINI_API_KEY
-    # - ANTHROPIC_API_KEY
-    # - OLLAMA_BASE_URL
-    # - OPENROUTER_API_KEY
-    # - CUSTOM_BASE_URL / CUSTOM_API_KEY
-    # TODO: create `root / "state"`.
-    # TODO: choose sensible defaults for compact memory.
-
-    raise NotImplementedError("Students should implement load_config().")
+    root = (base_dir or ROOT).resolve()
+    load_dotenv(root / ".env", override=False)
+    state = root / "state"
+    state.mkdir(parents=True, exist_ok=True)
+    model = _provider_config("LLM")
+    return LabConfig(root, root / "data", state,
+                     int(os.getenv("COMPACT_THRESHOLD_TOKENS", "1200")),
+                     int(os.getenv("COMPACT_KEEP_MESSAGES", "4")),
+                     model, _provider_config("JUDGE", model),
+                     float(os.getenv("MEMORY_MIN_CONFIDENCE", "0.85")),
+                     int(os.getenv("SUMMARY_BUDGET_TOKENS", "300")),
+                     int(os.getenv("MEMORY_HALF_LIFE_TURNS", "0")),
+                     float(os.getenv("MEMORY_MIN_WEIGHT", "0.125")))

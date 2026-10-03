@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "mode": "offline",
+    "created_at_utc": "2026-10-03T05:18:30.017965+00:00",
+    "provider": null,
+    "model": null,
+    "temperature": null,
+    "quality_method": "substring_heuristic",
+    "judge_provider": null,
+    "judge_model": null,
+    "compact_threshold": 1200,
+    "compact_keep_messages": 4,
+    "memory_min_confidence": 0.85,
+    "summary_budget_tokens": 300,
+    "answer_tokens_note": "Table counts answer calls only; include usage model_calls and judge_calls for total API usage.",
+    "token_source": "character_estimate",
+    "dataset_sha256": {
+      "advanced_long_context.json": "547f6bc1771710b1eb0400949da82310bf52c0caf32c56de8705bc8774ae5485",
+      "conversations.json": "540f8ee0795105a7302e77a49af080d3c3c10ff5fee698221a18e96cf054f942"
+    }
+  },
+  "results": {
+    "Standard Benchmark": [
+      {
+        "agent_name": "Baseline",
+        "agent_tokens_only": 901,
+        "prompt_tokens_processed": 11850,
+        "recall_score": 0.0,
+        "response_quality": 0.0,
+        "memory_growth_bytes": 0,
+        "compactions": 0
+      },
+      {
+        "agent_name": "Advanced",
+        "agent_tokens_only": 915,
+        "prompt_tokens_processed": 19296,
+        "recall_score": 1.0,
+        "response_quality": 1.0,
+        "memory_growth_bytes": 324,
+        "compactions": 0
+      }
+    ],
+    "Long-Context Stress Benchmark": [
+      {
+        "agent_name": "Baseline",
+        "agent_tokens_only": 174,
+        "prompt_tokens_processed": 21444,
+        "recall_score": 0.0,
+        "response_quality": 0.0,
+        "memory_growth_bytes": 0,
+        "compactions": 0
+      },
+      {
+        "agent_name": "Advanced",
+        "agent_tokens_only": 205,
+        "prompt_tokens_processed": 13115,
+        "recall_score": 1.0,
+        "response_quality": 1.0,
+        "memory_growth_bytes": 265,
+        "compactions": 2
+      }
+    ]
+  },
+  "usage": {
+    "Standard Benchmark": {
+      "Baseline": {
+        "model_calls": {},
+        "judge_calls": {}
+      },
+      "Advanced": {
+        "model_calls": {},
+        "judge_calls": {}
+      }
+    },
+    "Long-Context Stress Benchmark": {
+      "Baseline": {
+        "model_calls": {},
+        "judge_calls": {}
+      },
+      "Advanced": {
+        "model_calls": {},
+        "judge_calls": {}
+      }
+    }
+  }
+}

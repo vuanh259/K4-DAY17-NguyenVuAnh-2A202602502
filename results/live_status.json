@@ -1,0 +1,15 @@
+{
+  "status": "incomplete_provider_quota_exhausted",
+  "provider": "gemini",
+  "model": "gemini-2.5-flash",
+  "quality_method": "model_judge",
+  "http_status": 429,
+  "quota": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+  "reported_limit": 20,
+  "completed_answer_calls": 16,
+  "completed_judge_calls": 1,
+  "completed_recall_evaluations": 1,
+  "trace": "live_submission.trace.jsonl",
+  "complete_benchmark_available": false,
+  "note": "Partial run only. Do not use it as a Baseline/Advanced comparison or substitute offline scores."
+}

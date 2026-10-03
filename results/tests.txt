@@ -1,0 +1,32 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.1.1, pluggy-1.6.0 -- E:\VinUni20K\TRACK3\DAY17\K4-DAY17-NguyenVuAnh-2A202602502\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: E:\VinUni20K\TRACK3\DAY17\K4-DAY17-NguyenVuAnh-2A202602502
+plugins: anyio-4.15.1, langsmith-0.14.4
+collecting ... collected 23 items
+
+src/test_agents.py::test_user_markdown_read_write_edit PASSED            [  4%]
+src/test_agents.py::test_compact_trigger PASSED                          [  8%]
+src/test_agents.py::test_cross_session_recall PASSED                     [ 13%]
+src/test_agents.py::test_compact_reduces_prompt_load_on_long_thread PASSED [ 17%]
+src/test_agents.py::test_corrections_and_noise_do_not_poison_memory PASSED [ 21%]
+src/test_agents.py::test_questions_and_hypotheticals_are_not_facts[M\xecnh t\xean g\xec?] PASSED [ 26%]
+src/test_agents.py::test_questions_and_hypotheticals_are_not_facts[B\u1ea1n c\xf3 bi\u1ebft D\u0169ngCT kh\xf4ng?] PASSED [ 30%]
+src/test_agents.py::test_questions_and_hypotheticals_are_not_facts[N\u1ebfu m\xecnh \u1edf H\xe0 N\u1ed9i th\xec sao?] PASSED [ 34%]
+src/test_agents.py::test_questions_and_hypotheticals_are_not_facts[Gi\u1ea3 s\u1eed m\xecnh l\xe0m product manager.] PASSED [ 39%]
+src/test_agents.py::test_questions_and_hypotheticals_are_not_facts[M\xecnh \u0111\xf9a l\xe0 m\xecnh t\xean Nam.] PASSED [ 43%]
+src/test_agents.py::test_questions_and_hypotheticals_are_not_facts[Nh\u1eafc l\u1ea1i style tr\u1ea3 l\u1eddi m\xecnh th\xedch.] PASSED [ 47%]
+src/test_agents.py::test_questions_and_hypotheticals_are_not_facts[Nh\u1eafc l\u1ea1i gi\xfap m\xecnh t\xean v\xe0 style tr\u1ea3 l\u1eddi m\xecnh th\xedch trong stress test n\xe0y.] PASSED [ 52%]
+src/test_agents.py::test_profile_paths_are_safe[../escape] PASSED        [ 56%]
+src/test_agents.py::test_profile_paths_are_safe[a/b] PASSED              [ 60%]
+src/test_agents.py::test_profile_paths_are_safe[a\\b] PASSED             [ 65%]
+src/test_agents.py::test_profile_paths_are_safe[CON] PASSED              [ 69%]
+src/test_agents.py::test_profile_paths_are_safe[] PASSED                 [ 73%]
+src/test_agents.py::test_profile_paths_are_safe[Alice] PASSED            [ 78%]
+src/test_agents.py::test_profile_paths_are_safe[alice] PASSED            [ 82%]
+src/test_agents.py::test_token_accounting_and_no_profile_from_question PASSED [ 86%]
+src/test_agents.py::test_estimator_and_scoring PASSED                    [ 91%]
+src/test_agents.py::test_config_defaults_and_environment PASSED          [ 95%]
+src/test_agents.py::test_benchmark_is_reproducible_and_data_independent PASSED [100%]
+
+============================= 23 passed in 0.87s ==============================

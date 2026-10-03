@@ -1,0 +1,15 @@
+{
+  "kind": "synthetic_policy_experiment_not_live_model",
+  "half_life_turns": 2,
+  "minimum_weight": 0.5,
+  "elapsed_turns": 3,
+  "facts_on_disk": 2,
+  "facts_in_prompt": 1,
+  "full_profile_estimated_tokens": 39,
+  "active_profile_estimated_tokens": 18,
+  "stale_fact_hidden": true,
+  "reconfirmed_fact_kept": true,
+  "storage_bytes_including_metadata": 223,
+  "correction_replaces_old_value": true,
+  "correction_restores_active_fact": true
+}
